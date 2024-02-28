@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "data-model-creator"
+version = "0.1.0"
+description = ""
+authors = ["jalakoo <jalakoo@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.31.1"
+streamlit-agraph = "^0.0.45"
+openai = "^1.12.0"
+langchain = "^0.1.9"
+langchain-openai = "^0.0.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
