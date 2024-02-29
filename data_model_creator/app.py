@@ -1,6 +1,8 @@
 from arrows_ui import arrows_ui
-from ideate_ui import ideate_ui
-from llm_manager import LLM, EMBEDDINGS
+from config_ui import llm_config_ui
+from prompt_ui import prompt_ui
+from graph_ui import graph_ui
+# from llm_manager import LLM, EMBEDDINGS
 import streamlit as st
 import logging
 
@@ -38,7 +40,9 @@ def main()-> None:
     logging.info(f'App Started')
 
     # UI
-    ideate_ui()
+    llm_config_ui()
+    prompt_ui()
+    graph_ui()
     arrows_ui()
 
 if __name__ == "__main__":

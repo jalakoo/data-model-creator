@@ -2,7 +2,10 @@
 from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from secrets_manager import OPENAI_API_KEY
+import logging
+import openai
 import os
+import streamlit as st
 
 # TODO: secrets/.env flag to swith between LLM options
 
@@ -24,6 +27,46 @@ import os
 
 
 # Using OpenAI
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-LLM = ChatOpenAI(temperature=0)
-EMBEDDINGS = OpenAIEmbeddings()
+ 
+# LLM = ChatOpenAI(temperature=0)
+# EMBEDDINGS = OpenAIEmbeddings()
+
+DEFAULT_PROMPT_TEMPLATE = f"""
+    Given a prompt, extrapolate the most important Relationships. 
+
+    Each Relationship must connect 2 Entities represented as an item list like ["ENTITY 1", "RELATIONSHIP", "ENTITY 2"]. The Relationship is directed, so the order matters.
+
+    Use singular nouns for Entities.
+
+    For example; the prompt: `All birds like to eat seeds` should return: ["Bird", "EATS", "Seed"]
+
+    Limit the list to a maximum of 12 relationships. Prioritize item lists with Entities in multiple item lists. Remove duplicates.
+
+    prompt:
+    
+    """
+
+SAMPLE_PROMPT = "Sharks eat big fish. Big fish eat small fish. Small fish eat bugs."
+
+def update_openai_key(key: str):
+    os.environ["OPENAI_API_KEY"] = key
+    openai.api_key = OPENAI_API_KEY # This may not work in a Google Cloud Run instance
+
+
+@st.cache_data
+def generate_openai_response(prompt)-> str:
+    # TODO: Make this configurable
+    client = openai.OpenAI()
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo-1106",
+        # model="gpt-4",
+        response_format={"type":"json_object"},
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant designed to output JSON"},
+            {"role": "user", "content": prompt}
+            ]
+    )
+    # TODO: Validate reponse
+    content = response.choices[0].message.content
+    logging.debug(f'OpenAI Response: {response}, type: {type(content)}')
+    return content
