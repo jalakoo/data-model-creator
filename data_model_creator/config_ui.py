@@ -9,13 +9,12 @@ def llm_config_ui():
     if OPENAI_API_KEY is None or OPENAI_API_KEY == "":
         start_open = True
 
-    # st.markdown("Variation of Varun Shenoy's original [GraphGPT](https://graphgpt.vercel.app) to convert a natural language description into a graph data model")
-
     with st.expander("LLM Configuration", expanded = start_open):
 
-        # OPENAI TEXTFIELD
+        # Runtime override / insert of OpenAI Key
         new_open_ai_key = st.text_input(f'OpenAI KEY', type="password", value=OPENAI_API_KEY)
 
+        # Stop any other UI code if required key not avail
         if new_open_ai_key is None or new_open_ai_key == "":
             st.warning(f'OpenAI API Key required to use this app')
             st.stop()

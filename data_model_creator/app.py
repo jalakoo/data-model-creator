@@ -2,7 +2,6 @@ from arrows_ui import arrows_ui
 from config_ui import llm_config_ui
 from prompt_ui import prompt_ui
 from graph_ui import graph_ui
-# from llm_manager import LLM, EMBEDDINGS
 import streamlit as st
 import logging
 
@@ -13,13 +12,15 @@ from streamlit.config import on_config_parsed
 from streamlit.web import cli
 import sys
 
+# Logging config
+logging.getLogger().setLevel(logging.DEBUG)
+
 # noinspection PyUnresolvedReferences
 def heavy_imports() -> None:
     """For an explanation, please refer to this thread -
     https://discuss.streamlit.io/t/any-ideas-on-your-app-is-having-trouble-loading-the-
     st-aggrid-aggrid-component/10176/19?u=vovavili"""
     from streamlit_agraph import agraph, Node, Edge, Config
-
 
 def main()-> None:
 
@@ -36,8 +37,6 @@ def main()-> None:
 
     # SETUP
     st.set_page_config(layout="wide",initial_sidebar_state='collapsed')
-    logging.getLogger().setLevel(logging.DEBUG)
-    logging.info(f'App Started')
 
     # UI
     llm_config_ui()

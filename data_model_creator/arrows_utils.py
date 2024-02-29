@@ -1,4 +1,4 @@
-from streamlit_agraph import agraph, Node, Edge, Config
+from streamlit_agraph import Node, Edge
 import json
 import logging
 import random
@@ -19,15 +19,11 @@ def arrows_uri(input: str | dict) -> str:
     if isinstance(input, dict):
         input = json.dumps(input, default=str)
 
-    # Convert the diction object into a base 64 json string
+    # Convert the dictionary object into a base 64 json string
     b = input.encode('utf-8')
     base64_str = base64.b64encode(b).decode('utf-8')
 
-    result = f"https://arrows.app/#/import/json={base64_str}"
-
-    # logging.debug(f'\n\nOutput arrows uri from {input} with base64 JSON: \n{result}')
-
-    return result
+    return f"https://arrows.app/#/import/json={base64_str}"
 
 
 def arrows_dictionary(nodes: list[Node], edges: list[Edge], name: str = "GraphGPT Generated Model") -> dict:
@@ -43,9 +39,15 @@ def arrows_dictionary(nodes: list[Node], edges: list[Edge], name: str = "GraphGP
     """
     result_nodes = []
     result_relationships = []
+    num_nodes = len(nodes)
+
     for n in nodes:
-        random_x = round(random.uniform(-600, 600), 14)
-        random_y = round(random.uniform(-600, 600), 14)
+        # Dynamically space depending on number of nodes
+        # TODO: Replace with a Halton sequence generator or other method
+        min = (num_nodes / 2) * -100
+        max = (num_nodes / 2) * 100
+        random_x = round(random.uniform(min, max), 14)
+        random_y = round(random.uniform(min, max), 14)
         result_nodes.append({
             "id": n.id,
             "position":{

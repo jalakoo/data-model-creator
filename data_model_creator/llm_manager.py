@@ -31,6 +31,7 @@ import streamlit as st
 # LLM = ChatOpenAI(temperature=0)
 # EMBEDDINGS = OpenAIEmbeddings()
 
+# Variation of Varun Shenoy's original [GraphGPT](https://graphgpt.vercel.app) to convert a natural language description into a graph data model
 DEFAULT_PROMPT_TEMPLATE = f"""
     Given a prompt, extrapolate the most important Relationships. 
 

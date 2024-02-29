@@ -34,4 +34,5 @@ def arrows_ui():
         
         logging.info(f'Arrows source URI rendered: {uri}')
 
-        # st.session_state["ARROWS_URI"] = None
+        # Clear after use
+        st.session_state["ARROWS_URI"] = None

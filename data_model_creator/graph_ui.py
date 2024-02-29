@@ -83,16 +83,16 @@ def agraph_nodes_edges(response: str | list) -> tuple[list[Node], list[Edge]]:
 
     return result_nodes, result_edges
     
-def agraph_from_sample(prompt: str):
-    # TODO: Pull from a file of samples
-    openai_response = '[["Sharks", "eat", "big fish"], ["Big fish", "eat", "small fish"], ["Small fish", "eat", "bugs"]]'
-    nodes, edges = agraph_nodes_edges(openai_response)
-    config = Config(height=400, width=1000, directed=True)
+# def agraph_from_sample(prompt: str):
+#     # TODO: Pull from a file of samples
+#     openai_response = '[["Sharks", "eat", "big fish"], ["Big fish", "eat", "small fish"], ["Small fish", "eat", "bugs"]]'
+#     nodes, edges = agraph_nodes_edges(openai_response)
+#     config = Config(height=400, width=1000, directed=True)
 
-    if nodes is not None:
-        agraph(nodes=nodes, 
-            edges=edges, 
-            config=config) 
+#     if nodes is not None:
+#         agraph(nodes=nodes, 
+#             edges=edges, 
+#             config=config) 
         
 def graph_ui():
 
@@ -133,14 +133,10 @@ def graph_ui():
     # arrows_str = json.dumps(arrows_dict, indent=4)
     # st.code(arrows_str)
 
-    # Prep arrows compatible dictioary for button options
-
-
     if st.button("Edit in Arrows"):
 
         arrows_dict = arrows_dictionary(nodes, edges)
 
-        # Prep arrows compatible json
         uri = arrows_uri(arrows_dict)
 
         logging.info(f'Arrows URI generated: {uri}')

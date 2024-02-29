@@ -8,4 +8,4 @@ try:
 except:
     logging.info(f'No OPENAI API key found in Streamlit secrets')
 
-# TODO: if not found in secrets, try .env
+# TODO: .env fallback
